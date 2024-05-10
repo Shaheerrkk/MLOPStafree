@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            /* Gradient background */
+            background: linear-gradient(to bottom, #000033, #000000, #3399ff); /* Dark blue to dark black to light blue */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white; /* Text color */
+            position: relative; /* Needed for absolute positioning of arrows */
+        }
+
+        /* Header styles */
+        h1 {
+            color: white; /* White */
+        }
+
+        /* Button styles */
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Step container styles */
+        #progress-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Step styles */
+        .step {
+            background-color: #2196F3; /* Blue */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            position: relative;
+            z-index: 1; /* Ensure steps are above arrows */
+        }
+
+        /* Arrow styles */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px; /* Adjust arrow length */
+            height: 2px; /* Adjust arrow thickness */
+            background-color: white; /* Arrow color */
+            z-index: 0; /* Ensure arrows are behind steps */
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent; /* Adjust arrow size */
+            border-bottom: 6px solid transparent; /* Adjust arrow size */
+            border-left: 10px solid white; /* Adjust arrow size and color */
+            transform: translateY(-50%);
+        }
+
+        /* Arrow positioning */
+        #arrow1 {
+            left: calc(25% - 80px); /* Adjust left positioning */
+        }
+
+        #arrow2 {
+            left: calc(50% - 80px); /* Adjust left positioning */
+        }
+
+        #arrow3 {
+            left: calc(75% - 80px); /* Adjust left positioning */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Pipeline Execution</h1>
+    <form action="{% url 'run_pipelinee' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Run Pipeline</button>
+    </form>
+    
+    <div id="progress-container">
+        <div class="step" id="step1">Data Ingestion</div>
+        <div class="arrow" id="arrow1"></div>
+        <div class="step" id="step2">Data Preprocessing</div>
+        <div class="arrow" id="arrow2"></div>
+        <div class="step" id="step3">Model Training</div>
+        <div class="arrow" id="arrow3"></div>
+        <div class="step" id="step4">Model Evaluation</div>
+    </div>
+    
+    <script src="{% static 'scripts.js' %}"></script>
+</body>
+</html>
