@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .scripts import data_ingestion, data_preprocessing, model_training, inference
-#from .scripts.graphs import plot_graphs
+from .scripts.graphs import plot_graphs
 import os
 import time
 
@@ -28,33 +28,33 @@ def run_pipelinee(request):
     return render(request, 'index.html')
 
 def data_ingestion_view(request):
-    train_csv_path = os.path.join(BASE_DIR, 'Sales\\scripts', 'Train.csv')
-    test_csv_path = os.path.join(BASE_DIR, 'Sales\\scripts', 'Test.csv')
+    train_csv_path = os.path.join(BASE_DIR, 'salesapp\\scripts', 'Train.csv')
+    test_csv_path = os.path.join(BASE_DIR, 'salesapp\\scripts', 'Test.csv')
     bigmart_train = data_ingestion.load_data(train_csv_path)
     bigmart_test = data_ingestion.load_data(test_csv_path)
     print("Data Ingestion completed successfully.")
 
 def data_preprocessing_view(request):
     
-    train_csv_path = os.path.join(BASE_DIR, 'Sales\\scripts', 'Train.csv')
+    train_csv_path = os.path.join(BASE_DIR, 'salesapp\\scripts', 'Train.csv')
     bigmart_train = data_ingestion.load_data(train_csv_path)
-    #plot_graphs(bigmart_train)
+    plot_graphs(bigmart_train)
     train_data = data_preprocessing.preprocess_data(bigmart_train)
     
     print("Data Preprocessing completed successfully.")
 
 def model_training_view(request):
-    train_csv_path = os.path.join(BASE_DIR, 'Sales\\scripts', 'Train.csv')
+    train_csv_path = os.path.join(BASE_DIR, 'salesapp\\scripts', 'Train.csv')
     bigmart_train = data_ingestion.load_data(train_csv_path)
     train_data = data_preprocessing.preprocess_data(bigmart_train)
     model = model_training.train_model(train_data)
     print("Model Training completed successfully.")
 
 def model_evaluation_view(request):
-    test_csv_path = os.path.join(BASE_DIR, 'Sales\\scripts', 'Test.csv')
+    test_csv_path = os.path.join(BASE_DIR, 'salesapp\\scripts', 'Test.csv')
     bigmart_test = data_ingestion.load_data(test_csv_path)
     test_data = data_preprocessing.preprocess_data(bigmart_test)
-    train_csv_path = os.path.join(BASE_DIR, 'Sales\\scripts', 'Train.csv')
+    train_csv_path = os.path.join(BASE_DIR, 'salesapp\\scripts', 'Train.csv')
     bigmart_train = data_ingestion.load_data(train_csv_path)
     train_data = data_preprocessing.preprocess_data(bigmart_train)
     model = model_training.train_model(train_data)
@@ -62,6 +62,7 @@ def model_evaluation_view(request):
     print("Model Evaluation completed successfully.")
 
 def run_pipeline(request):
+    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\n\n\n\n\n")
     if request.method == 'POST':
         # Extracting user input
         item_weight = float(request.POST.get('item_weight', 0))
@@ -84,7 +85,7 @@ def run_pipeline(request):
             'Outlet_Location_Type': outlet_location_type,
             'Outlet_Type': outlet_type
         }
-        print("Shit")
+        print("Shit\n\n\n\n\n\n\n\n\n")
         print(user_input_data)
 
         # Data Ingestion
@@ -95,10 +96,10 @@ def run_pipeline(request):
         print("Data Ingestion completed successfully.")
 
         # Data Preprocessing
-        # train_data = data_preprocessing.preprocess_data(bigmart_train)
+        train_data = data_preprocessing.preprocess_data(bigmart_train)
         user_data = data_preprocessing.preprocess_data(user_input_data)
         print(user_data)
-        # plot_graphs(train_data)
+        plot_graphs(train_data)
         print("Data Preprocessing completed successfully.")
 
         # Model Training

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'salesapp',
-    #'import_export'
+    'import_export'
 ]
 
 MIDDLEWARE = [
